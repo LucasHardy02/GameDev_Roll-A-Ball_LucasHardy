@@ -11,6 +11,9 @@ public class PlayerController : MonoBehaviour
     private float movementX;
     private float movementY;
     private int count;
+
+    public float hop;
+   
   
     void Start()
     {
@@ -32,9 +35,11 @@ public class PlayerController : MonoBehaviour
     void SetCountText()
     {
         countText.text = "Count: " + count.ToString();
-        if(count >= 12)
+        if(count >= 13)
         {
             winTextObject.SetActive(true);
+
+            Destroy(GameObject.FindGameObjectWithTag("Enemy"));
         }
     }
 
@@ -43,6 +48,20 @@ public class PlayerController : MonoBehaviour
         Vector3 movement = new Vector3(movementX, 0.0f, movementY);
 
         rb.AddForce(movement * speed);
+
+        
+        }
+        
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            Destroy(gameObject);
+
+            winTextObject.gameObject.SetActive(true);
+            winTextObject.GetComponent<TextMeshProUGUI>().text = "You Lose!";
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -55,4 +74,12 @@ public class PlayerController : MonoBehaviour
             SetCountText();
         }
     }
+
+    void OnJump(InputValue jumpValue)
+    {
+        rb.AddForce(Vector3.up * hop, ForceMode.Impulse);
+    }
+
+   
+
 }
