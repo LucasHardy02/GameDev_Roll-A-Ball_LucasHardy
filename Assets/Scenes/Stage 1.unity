@@ -1657,6 +1657,7 @@ MonoBehaviour:
   speed: 10
   countText: {fileID: 1530438052}
   winTextObject: {fileID: 1303566309}
+  hop: 5
 --- !u!114 &605175467
 MonoBehaviour:
   m_ObjectHideFlags: 0
