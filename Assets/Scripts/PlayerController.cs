@@ -1,11 +1,14 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using UnityEngine.ProBuilder.MeshOperations;
 public class PlayerController : MonoBehaviour
 {
     public float speed = 0;
     public TextMeshProUGUI countText;
     public GameObject winTextObject;
+    public bool IsGrounded;
+    public float Height;
 
     private Rigidbody rb;
     private float movementX;
@@ -19,7 +22,7 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         count = 0;
-
+        Height = 1.1f;
         SetCountText();
         winTextObject.SetActive(false);
     }
@@ -49,8 +52,17 @@ public class PlayerController : MonoBehaviour
 
         rb.AddForce(movement * speed);
 
-        
+        if (Physics.Raycast(transform.position, Vector3.down, Height))
+        {
+            IsGrounded = true;
+            Debug.Log("Grounded");
         }
+        else
+        {
+            IsGrounded = false;
+            Debug.Log("Not Grounded!");
+        }   
+    }
         
 
     private void OnCollisionEnter(Collision collision)
@@ -61,6 +73,23 @@ public class PlayerController : MonoBehaviour
 
             winTextObject.gameObject.SetActive(true);
             winTextObject.GetComponent<TextMeshProUGUI>().text = "You Lose!";
+        }
+        else if (collision.gameObject.CompareTag("Water"))
+        {
+            if (count >= 13)
+            {
+
+            }
+            else
+            {
+                Destroy(gameObject);
+
+                winTextObject.gameObject.SetActive(true);
+                winTextObject.GetComponent<TextMeshProUGUI>().text = "You Lose!";
+            }
+                
+
+            
         }
     }
 
@@ -77,7 +106,16 @@ public class PlayerController : MonoBehaviour
 
     void OnJump(InputValue jumpValue)
     {
-        rb.AddForce(Vector3.up * hop, ForceMode.Impulse);
+        
+        if (IsGrounded == true)
+        {
+            rb.AddForce(Vector3.up * hop, ForceMode.Impulse);
+        }
+        else if (IsGrounded == false)
+        {
+            
+        }
+        
     }
 
    
