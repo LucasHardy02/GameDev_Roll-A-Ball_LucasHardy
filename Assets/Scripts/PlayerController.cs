@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     public GameObject winTextObject;
     public bool IsGrounded;
     public float Height;
+    public GameObject player;
 
     private Rigidbody rb;
     private float movementX;
@@ -69,7 +70,7 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            Destroy(gameObject);
+            player.gameObject.SetActive(false);
 
             winTextObject.gameObject.SetActive(true);
             winTextObject.GetComponent<TextMeshProUGUI>().text = "You Lose!";
@@ -82,7 +83,8 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                Destroy(gameObject);
+                player.gameObject.SetActive(false);
+
 
                 winTextObject.gameObject.SetActive(true);
                 winTextObject.GetComponent<TextMeshProUGUI>().text = "You Lose!";
