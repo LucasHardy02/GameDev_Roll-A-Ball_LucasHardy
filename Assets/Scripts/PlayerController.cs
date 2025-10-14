@@ -1,7 +1,8 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using TMPro;
 using UnityEngine.ProBuilder.MeshOperations;
+using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     public float speed = 0;
@@ -42,6 +43,7 @@ public class PlayerController : MonoBehaviour
         if(count >= 13)
         {
             winTextObject.SetActive(true);
+            CompleteLevel();
 
             Destroy(GameObject.FindGameObjectWithTag("Enemy"));
         }
@@ -79,7 +81,7 @@ public class PlayerController : MonoBehaviour
         {
             if (count >= 13)
             {
-
+                
             }
             else
             {
@@ -120,6 +122,21 @@ public class PlayerController : MonoBehaviour
         
     }
 
-   
 
-}
+    public void CompleteLevel()
+    {
+
+        int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
+
+
+        if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
+        {
+            SceneManager.LoadScene(nextSceneIndex);
+        }
+        else
+        {
+            Debug.Log("No more levels! Game completed.");
+        }
+    }
+
+    }
