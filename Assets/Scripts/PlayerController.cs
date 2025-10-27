@@ -29,6 +29,14 @@ public class PlayerController : MonoBehaviour
         winTextObject.SetActive(false);
     }
 
+    private void Update()
+    {
+        if(Input.GetKey(KeyCode.R))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+    }
+
     void OnMove(InputValue movementValue)
     {
         Vector2 movementVector = movementValue.Get<Vector2>();
@@ -139,4 +147,4 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    }
+}
