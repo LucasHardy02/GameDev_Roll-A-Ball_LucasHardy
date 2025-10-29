@@ -7,6 +7,8 @@ TagManager:
   - Pickup
   - Enemy
   - Water
+  - Key
+  - Door
   layers:
   - Default
   - TransparentFX
