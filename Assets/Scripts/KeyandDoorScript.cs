@@ -5,6 +5,8 @@ public class KeyandDoorScript : MonoBehaviour
 {
     public Animator DoorAnim;
     static bool HasKey = false;
+    public AudioSource audioSource;
+    public AudioClip keySound;
 
     private void Start()
     {
@@ -16,6 +18,8 @@ public class KeyandDoorScript : MonoBehaviour
         {
             other.gameObject.SetActive(false);
             HasKey = true;
+            audioSource.clip = keySound;
+            audioSource.Play();
         }
         if (HasKey == true && other.gameObject.CompareTag("Door"))
         {
