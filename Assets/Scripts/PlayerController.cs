@@ -11,6 +11,9 @@ public class PlayerController : MonoBehaviour
     public bool IsGrounded;
     public float Height;
     public GameObject player;
+    public AudioSource audioSource;
+    public AudioClip pickupSound;
+    public AudioClip jumpSound;
 
     private Rigidbody rb;
     private float movementX;
@@ -105,6 +108,8 @@ public class PlayerController : MonoBehaviour
         {
             other.gameObject.SetActive(false);
             count = count + 1;
+            audioSource.clip = pickupSound;
+            audioSource.Play();
 
             SetCountText();
         }
@@ -116,6 +121,8 @@ public class PlayerController : MonoBehaviour
         if (IsGrounded == true)
         {
             rb.AddForce(Vector3.up * hop, ForceMode.Impulse);
+            audioSource.clip = jumpSound;
+            audioSource.Play();
         }
         else if (IsGrounded == false)
         {
