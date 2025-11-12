@@ -14,6 +14,9 @@ public class PlayerController : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip pickupSound;
     public AudioClip jumpSound;
+    public bool isDead = false;
+    public GameObject DeathMenuUI;
+    public GameObject mainCanvas;
 
     private Rigidbody rb;
     private float movementX;
@@ -25,14 +28,22 @@ public class PlayerController : MonoBehaviour
   
     void Start()
     {
+        DeathMenuUI.SetActive(false);
+        isDead = false;
         rb = GetComponent<Rigidbody>();
         count = 0;
         Height = 1.1f;
         SetCountText();
         winTextObject.SetActive(false);
     }
+    private void Update()
+    {
+        if (isDead && !DeathMenuUI.activeSelf)
+        {
+            DeathMenuUI.SetActive(true);
+        }
+    }
 
-    
 
     void OnMove(InputValue movementValue)
     {
@@ -42,6 +53,14 @@ public class PlayerController : MonoBehaviour
         movementY = movementVector.y;
     }
 
+    void OnDeath()
+    {
+        if(isDead == true)
+        {
+            DeathMenuUI.SetActive(true);
+        }
+
+    }
     void SetCountText()
     {
         countText.text = "Count: " + count.ToString();
@@ -78,10 +97,12 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemy"))
         {
             player.gameObject.SetActive(false);
+            isDead = true;
+            mainCanvas.SetActive(false);
+            OnDeath();
 
-            winTextObject.gameObject.SetActive(true);
-            winTextObject.GetComponent<TextMeshProUGUI>().text = "You Lose!";
-        }
+
+}
         else if (collision.gameObject.CompareTag("Water"))
         {
             if (count >= 13)
@@ -92,13 +113,15 @@ public class PlayerController : MonoBehaviour
             {
                 player.gameObject.SetActive(false);
 
+                isDead = true;
+                mainCanvas.SetActive(false);
+                OnDeath();
 
-                winTextObject.gameObject.SetActive(true);
-                winTextObject.GetComponent<TextMeshProUGUI>().text = "You Lose!";
+
             }
-                
 
-            
+
+
         }
     }
 
