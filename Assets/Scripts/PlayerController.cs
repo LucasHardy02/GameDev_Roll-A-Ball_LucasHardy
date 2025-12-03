@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     public bool isDead = false;
     public GameObject DeathMenuUI;
     public GameObject mainCanvas;
+    public GameObject NextStageMenu;
 
     private Rigidbody rb;
     private float movementX;
@@ -158,17 +159,7 @@ public class PlayerController : MonoBehaviour
     public void CompleteLevel()
     {
 
-        int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
-
-
-        if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
-        {
-            SceneManager.LoadScene(nextSceneIndex);
-        }
-        else
-        {
-            Debug.Log("No more levels! Game completed.");
-        }
+        NextStageMenu.SetActive(true);
     }
 
 }
